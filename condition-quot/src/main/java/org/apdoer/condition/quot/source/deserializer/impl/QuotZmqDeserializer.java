@@ -7,7 +7,7 @@ import org.apdoer.condition.quot.payload.QuotPriceMessageSourcePayload;
 import org.apdoer.condition.quot.source.deserializer.ZmqDeserializer;
 
 /**
- * @author Li
+ * @author apdoer
  * @version 1.0
  * @date 2020/5/12 11:19
  */

@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * 内部通道数据负载
  *
- * @author Li
+ * @author apdoer
  * @version 1.0
  * @date 2020/5/12 15:26
  */

@@ -1,7 +1,7 @@
 package org.apdoer.condition.core.event.handler;
 
 /**
- * @author Li
+ * @author apdoer
  * @version 1.0
  * @date 2020/5/13 18:51
  */

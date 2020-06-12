@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 数据源类型
- * @author li
+ * @author apdoer
  */
 @Data
 @AllArgsConstructor

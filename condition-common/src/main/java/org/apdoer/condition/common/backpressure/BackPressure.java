@@ -3,7 +3,7 @@ package org.apdoer.condition.common.backpressure;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author Li
+ * @author apdoer
  * @version 1.0
  * @date 2020/5/12 10:57
  */

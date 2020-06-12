@@ -6,7 +6,7 @@ import org.apdoer.condition.common.event.listener.SourceEventListener;
 /**
  * eventbus 通道管理接口
  *
- * @author Li
+ * @author apdoer
  * @version 1.0
  * @date 2020/5/12 16:48
  */
