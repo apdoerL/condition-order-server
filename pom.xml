@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.apdoer</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>org.apdoer</groupId>
+    <artifactId>condition-server</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>condition-server</name>
+    <packaging>pom</packaging>
+
+    <properties>
+        <condition.common.version>1.0.0-SNAPSHOT</condition.common.version>
+        <condition.monitor.version>1.0.0-SNAPSHOT</condition.monitor.version>
+        <condition.quot.version>1.0.0-SNAPSHOT</condition.quot.version>
+        <condition.core.version>1.0.0-SNAPSHOT</condition.core.version>
+        <condition.job.version>1.0.0-SNAPSHOT</condition.job.version>
+    </properties>
+
+    <modules>
+        <module>condition-common</module>
+        <module>condition-core</module>
+        <module>condition-job</module>
+        <module>condition-quot</module>
+        <module>condition-monitor</module>
+    </modules>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apdoer</groupId>
+                <artifactId>condition-common</artifactId>
+                <version>${condition.common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apdoer</groupId>
+                <artifactId>condition-core</artifactId>
+                <version>${condition.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apdoer</groupId>
+                <artifactId>condition-monitor</artifactId>
+                <version>${condition.monitor.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apdoer</groupId>
+                <artifactId>condition-quot</artifactId>
+                <version>${condition.quot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apdoer</groupId>
+                <artifactId>condition-job</artifactId>
+                <version>${condition.job.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

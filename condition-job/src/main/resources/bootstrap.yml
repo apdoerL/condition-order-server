@@ -1,0 +1,8 @@
+server:
+  port: 8007
+
+spring:
+  application:
+    name: condition-order-server
+  profiles:
+    active: dev

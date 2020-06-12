@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.apdoer.condition.common.db.mapper.ContractChannelMappingMapper">
+
+    <resultMap id="BaseResultMap" type="org.apdoer.condition.common.db.model.po.ContractChannelMappingPo" >
+        <result column="contract_id" property="contractId" jdbcType="INTEGER" />
+        <result column="quot_channel" property="quotChannel" jdbcType="VARCHAR" />
+        <result column="index_quot_listener" property="indexQuotListener" jdbcType="VARCHAR" />
+        <result column="clear_quot_listener" property="clearQuotListener" jdbcType="VARCHAR" />
+        <result column="index_cache_listener" property="indexCacheListener" jdbcType="VARCHAR" />
+        <result column="clear_cache_listener" property="clearCacheListener" jdbcType="VARCHAR" />
+        <result column="tick_channel" property="tickChannel" jdbcType="VARCHAR" />
+        <result column="tick_listener" property="tickListener" jdbcType="VARCHAR" />
+        <result column="tick_cache_listener" property="tickCacheListener" jdbcType="VARCHAR" />
+        <result column="condition_order_channel" property="conditionOrderChannel" jdbcType="VARCHAR" />
+        <result column="condition_order_listener" property="conditionOrderListener" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+    contract_id, quot_channel, index_quot_listener, clear_quot_listener, index_cache_listener,clear_cache_listener,
+    tick_channel, tick_listener, tick_cache_listener, condition_order_channel,condition_order_listener,
+    create_time
+    </sql>
+
+    <select id="queryAllMapping" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from web_contract_condition_channel_mapping
+    </select>
+
+    <select id="queryMappingByContractId" resultMap="BaseResultMap">
+        select
+            <include refid="Base_Column_List"/>
+        from web_contract_condition_channel_mapping
+        where
+        contract_id = #{contractId} limit 1
+    </select>
+
+</mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.apdoer.condition.common.db.mapper.BrokerUserMapper">
+    <resultMap id="BaseResultMap" type="org.apdoer.condition.common.db.model.po.MsBrokerUserPo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="pwd" property="pwd" jdbcType="VARCHAR"/>
+        <result column="broker_id" property="brokerId" jdbcType="INTEGER"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="channel_subject" property="channelSubject" jdbcType="VARCHAR"/>
+        <result column="google_code" property="googleCode" jdbcType="VARCHAR"/>
+        <result column="avator" property="avator" jdbcType="VARCHAR"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="enabled" property="enabled" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, user_name, nickname, pwd, broker_id, parent_id, email, phone, channel_subject,
+        google_code, avator, description, enabled, create_time, update_time
+    </sql>
+    
+    <select id="queryGroup" resultType="java.lang.Integer">
+		select 
+			 group_id
+		from core_group_future
+		where
+			user_id=#{userId}
+			and enabled = 0
+			limit 1
+    </select>
+    
+	<select id="queryChannelNameSelectByGroupId" resultType="java.lang.String">
+		SELECT 
+			mbu.channel_subject 
+		FROM ms_broker_group mbg 
+		JOIN ms_broker_user mbu 
+		ON mbg.broker_id = mbu.broker_id 
+		where 
+			mbg.group_id=#{groupId} 
+			and mbg.enabled=0 
+			and mbu.enabled=0
+	</select>
+	
+	<select id="queryBrokerParamValueByBrokerIdAndParamId" resultType="java.lang.Integer">
+		select 
+			param_value 
+		from ms_broker_param
+		where
+			broker_id=#{brokerId}
+			and param_id=#{paramId}
+			and enabled=0
+	</select>
+	
+	<select id="queryAllBrokerGroupListByBrokerId" resultType="java.lang.Integer">
+        select
+             group_id
+        from ms_broker_group
+        where
+            enabled = 0
+            and appl_id = 2
+            and broker_id = #{brokerId}
+    </select>
+    
+    <select id="queryBrokerManagerGroupByBrokerId" resultType="java.lang.Integer">
+        SELECT 
+        	group_id 
+        from ms_broker_group WHERE user_id=#{userId}
+		UNION ALL
+		(
+			select 
+    			mg.group_id 
+    		from ms_broker_group mg 
+    		JOIN ms_broker_partner mp on mg.user_id=mp.user_id 
+    		WHERE 
+    			mp.parent_id = #{userId}
+    			and mp.partner_type=2
+    			and mg.enabled=0 
+    			and mp.enabled=0
+		)
+    </select>
+</mapper>

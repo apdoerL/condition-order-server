@@ -1,0 +1,20 @@
+server:
+  port: 8007
+
+spring:
+  application:
+    name: condition-order-server
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+      profile: test
+      label: test
+
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka

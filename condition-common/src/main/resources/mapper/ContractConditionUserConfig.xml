@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.apdoer.condition.common.db.mapper.ContractConditionUserConfigMapper">
+
+    <resultMap id="BaseResultMap" type="org.apdoer.condition.common.db.model.po.ContractConditionUserConfigPo" >
+   	 	<result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="contract_id" property="contractId" jdbcType="INTEGER" />
+        <result column="active_times" property="activeTimes" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+    	user_id,contract_id,active_times
+    </sql>
+
+	<select id="queryUserConfig" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List"/>
+		from web_contract_condition_user_config
+		where
+			user_id=#{userId}
+			and contract_id=#{contractId}
+	</select>
+
+</mapper>

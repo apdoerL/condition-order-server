@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.apdoer.condition.common.db.mapper.ContractConditionOrderMapper" >
+  <resultMap id="BaseResultMap" type="org.apdoer.condition.common.db.model.po.ContractConditionOrderPo" >
+    <id column="condition_order_id" property="conditionOrderId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="contract_id" property="contractId" jdbcType="INTEGER" />
+    <result column="quantity" property="quantity" jdbcType="DECIMAL" />
+    <result column="side" property="side" jdbcType="INTEGER" />
+    <result column="order_type" property="orderType" jdbcType="INTEGER" />
+    <result column="order_price" property="orderPrice" jdbcType="DECIMAL" />
+    <result column="position_effect" property="positionEffect" jdbcType="INTEGER" />
+    <result column="margin_type" property="marginType" jdbcType="INTEGER" />
+    <result column="margin_rate" property="marginRate" jdbcType="DECIMAL" />
+    <result column="minimal_quantity" property="minimalQuantity" jdbcType="DECIMAL" />
+    <result column="trigger_type" property="triggerType" jdbcType="INTEGER" />
+    <result column="curt_price" property="curtPrice" jdbcType="DECIMAL" />
+    <result column="trigger_price" property="triggerPrice" jdbcType="DECIMAL" />
+    <result column="real_trigger_price" property="realTriggerPrice" jdbcType="DECIMAL" />
+    <result column="condition_order_type" property="conditionOrderType" jdbcType="INTEGER" />
+    <result column="stop_profit_price" property="stopProfitPrice" jdbcType="DECIMAL" />
+    <result column="stop_loss_price" property="stopLossPrice" jdbcType="DECIMAL" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    condition_order_id, user_id, contract_id, quantity, side, order_type, order_price, curt_price,
+    position_effect, margin_type, margin_rate, minimal_quantity, trigger_type, trigger_price, real_trigger_price, 
+    condition_order_type, stop_profit_price, stop_loss_price, uuid, code, order_id, status, update_time, create_time
+  </sql>
+  
+  <select id="queryContractIds" resultType="java.lang.Integer">
+  	select 
+  		contract_id 
+  	from core_contract_future
+  	where
+  		contract_status in (1, 2, 3, 4)
+  </select>
+  
+  <select id="queryOrder" resultMap="BaseResultMap">
+  	select 
+  		<include refid="Base_Column_List"/> 
+  	from ${tableName}
+  	where
+  		condition_order_id=#{conditionOrderId}
+  		and user_id = #{userId}
+  		and status = #{status}
+  </select>
+  
+  <select id="queryUnTriggerOrderByUuid" resultMap="BaseResultMap">
+  	select 
+  		<include refid="Base_Column_List"/> 
+  	from ${tableName}
+  	where
+  		uuid = #{uuid} and status=1
+  </select>
+  
+  <select id="getUnTriggerOrder" resultMap="BaseResultMap">
+     select
+         <include refid="Base_Column_List"/>
+     from
+         ${tableName}
+     where
+         status = 1
+  </select>
+  
+  <select id="queryHistory" resultMap="BaseResultMap">
+  	select
+  		<include refid="Base_Column_List"/>
+  	from ${tableName}
+  	 where
+     	user_id = #{userId}
+     	<if test="contractId != null">
+     		and contract_id = #{contractId}
+     	</if>
+     	<if test="side != null">
+     		and posi_side = #{side}
+     	</if>
+     	<if test="status != null">
+     		and status = #{status}
+     	</if>
+     	order by create_time desc
+  </select>
+  
+  <update id="updateRecordStatusSucc">
+    update ${tableName} 
+  	set 
+  		status=2, 
+  		order_id=#{orderId},
+  		real_trigger_price=#{realTriggerPrice}
+  	where 
+  		condition_order_id=#{conditionOrderId} 
+  		and user_id = #{userId}
+  		and status  = 1
+  </update>
+  
+  <update id="updateRecordStatusFail">
+    update ${tableName} 
+  	set 
+  		status=3, 
+  		code=#{code},
+  		real_trigger_price=#{realTriggerPrice}
+  	where 
+  		condition_order_id=#{conditionOrderId} 
+  		and user_id = #{userId}
+  		and status  = 1
+  </update>
+  
+    
+  <update id="updateStatus">
+    update ${tableName} 
+  	set status=#{status}
+  	where 
+  		condition_order_id=#{conditionOrderId} 
+  		and user_id = #{userId}
+  		and status  = 1
+  </update>
+  
+</mapper>
